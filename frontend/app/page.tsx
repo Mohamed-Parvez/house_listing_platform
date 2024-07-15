@@ -6,7 +6,7 @@ interface HouseProps {
   housePrice: number;
 }
 
-export default async function Home() {
+async function Home() {
   const fetchdata = await fetch("http://localhost:8080/", {
     cache: "no-store",
   });
@@ -22,17 +22,17 @@ export default async function Home() {
         </Link>
       </div>
       <div className="flex flex-col items-start space-y-6 justify-start m-4">
-        {getdata.map((items) => (
+        {getdata.map((items: any) => (
           <div
             key={items._id}
-            className="flex items-center justify-center gap-4"
+            className="flex items-center ring-1 rounded-[6px] ring-black p-4 justify-center gap-4"
           >
             <div className="flex flex-col items-start rounded-[6px] ring-1 ring-black p-4 justify-start space-y-3">
               <p>House Id: {items._id}</p>
               <p>House Name: {items.houseName}</p>
               <p>House Price: {items.housePrice}</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col space-y-8 items-center justify-center">
               <Link
                 href={{
                   pathname: "/houseupdate",
@@ -41,13 +41,21 @@ export default async function Home() {
                   },
                 }}
               >
-                <button className="bg-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-full">
+                <button className="bg-black ring-1 ring-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-full">
                   Update
                 </button>
               </Link>
-              <button className="bg-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-full">
+              <Link
+                className="bg-black text-white ring-1 ring-black hover:bg-white hover:text-black px-4 py-2 rounded-full"
+                href={{
+                  pathname: "/deletehouse",
+                  query: {
+                    search: items._id,
+                  },
+                }}
+              >
                 Delete
-              </button>
+              </Link>
             </div>
           </div>
         ))}
@@ -55,3 +63,5 @@ export default async function Home() {
     </main>
   );
 }
+
+export default Home;

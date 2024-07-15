@@ -35,7 +35,7 @@ app.put("/api/house/", async (req, res) => {
 });
 
 app.delete("/api/house/", async (req, res) => {
-  const id = req.body.id;
+  const id = req.body._id;
   const deleteData = await House.findByIdAndDelete(id);
   res.json(deleteData);
 });

@@ -40,6 +40,7 @@ const page = ({ searchParams }: any) => {
               console.log("posted successfully");
             });
             reset();
+            router.push("/");
           }
         )}
       >

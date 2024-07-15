@@ -39,6 +39,7 @@ const page = () => {
               console.log("posted successfully");
             });
             reset();
+            router.push("/");
           }
         )}
       >
