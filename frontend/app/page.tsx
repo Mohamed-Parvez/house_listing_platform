@@ -25,11 +25,30 @@ export default async function Home() {
         {getdata.map((items) => (
           <div
             key={items._id}
-            className="flex flex-col items-start rounded-[6px] ring-1 ring-black p-4 justify-start space-y-3"
+            className="flex items-center justify-center gap-4"
           >
-            <p>House Id: {items._id}</p>
-            <p>House Name: {items.houseName}</p>
-            <p>House Price: {items.housePrice}</p>
+            <div className="flex flex-col items-start rounded-[6px] ring-1 ring-black p-4 justify-start space-y-3">
+              <p>House Id: {items._id}</p>
+              <p>House Name: {items.houseName}</p>
+              <p>House Price: {items.housePrice}</p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <Link
+                href={{
+                  pathname: "/houseupdate",
+                  query: {
+                    search: items._id,
+                  },
+                }}
+              >
+                <button className="bg-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-full">
+                  Update
+                </button>
+              </Link>
+              <button className="bg-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-full">
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>

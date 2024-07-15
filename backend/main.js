@@ -28,14 +28,14 @@ app.post("/api/house", async (req, res) => {
   res.json(getdata);
 });
 
-app.put("/api/house/:id", async (req, res) => {
-  const id = req.params.id;
+app.put("/api/house/", async (req, res) => {
+  const id = req.body._id;
   const updateData = await House.findByIdAndUpdate(id, req.body);
   res.json(updateData);
 });
 
-app.delete("/api/house/:id", async (req, res) => {
-  const id = req.params.id;
+app.delete("/api/house/", async (req, res) => {
+  const id = req.body.id;
   const deleteData = await House.findByIdAndDelete(id);
   res.json(deleteData);
 });
