@@ -1,16 +1,14 @@
-const express = require("express");
+import express from "express";
+import connection from "./database/connection.js";
+import House from "./database/schema.js";
+import cors from "cors";
+import dotenv from "dotenv";
 
-const connection = require("./database/connection");
-
-const House = require("./database/schema");
-
-const cors = require("cors");
+dotenv.config();
 
 const app = express();
 
 app.use(express.json());
-
-const port = 8080;
 
 app.use(
   cors({
@@ -40,7 +38,7 @@ app.delete("/api/house/", async (req, res) => {
   res.json(deleteData);
 });
 
-app.listen(port, () => {
-  console.log(`the server is running on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`the server is running on port ${process.env.PORT}`);
   connection();
 });
