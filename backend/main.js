@@ -3,6 +3,10 @@ import connection from "./database/connection.js";
 import House from "./database/schema.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import { User } from "./database/schema.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import Authenticate from "./middleware.js";
 
 dotenv.config();
 
@@ -36,6 +40,80 @@ app.delete("/api/house/", async (req, res) => {
   const id = req.body._id;
   const deleteData = await House.findByIdAndDelete(id);
   res.json(deleteData);
+});
+
+// SIGNUP USER
+app.post("/api/signup", async (req, res) => {
+  const { name, email, password } = req.body;
+  const findUser = await User.findOne({ email: email });
+  if (findUser) {
+    res.json({
+      status: "failed",
+      message: "email is already taken create a newone",
+    });
+  } else {
+    const encryptPassword = await bcrypt.hashSync(password, 10);
+    await User.create({
+      name: name,
+      email: email,
+      password: encryptPassword,
+    });
+    const generatetoken = await jwt.sign(
+      {
+        name: name,
+        email: email,
+      },
+      process.env.SECRET
+    );
+    res.status(201).json({
+      staus: "success",
+      token: generatetoken,
+      message: `user is created successfully`,
+    });
+  }
+});
+
+// LOGIN USER
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  const findUser = await User.findOne({ email: email });
+  if (!findUser) {
+    res.json({
+      status: "failed",
+      message: "invalid email or password",
+    });
+  } else {
+    const decrypt_password = await bcrypt.compareSync(
+      password,
+      findUser.password
+    );
+    if (!findUser || !decrypt_password) {
+      res.json({
+        status: "failed",
+        message: "invalid email or password",
+      });
+    } else {
+      const generatetoken = await jwt.sign(
+        {
+          name: findUser.name,
+          email: email,
+        },
+        process.env.SECRET
+      );
+      res.status(201).json({
+        staus: "success",
+        token: generatetoken,
+        message: `logged in successfully`,
+      });
+    }
+  }
+});
+
+app.get("/protected", Authenticate, (req, res) => {
+  res.json({
+    email: req.email,
+    message: "this is a protected route congrats",
+  });
 });
 
 app.listen(process.env.PORT, () => {

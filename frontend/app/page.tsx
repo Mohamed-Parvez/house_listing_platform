@@ -1,5 +1,5 @@
-import UserAuthOptions from "@/components/UserAuthOptions";
 import Link from "next/link";
+import UserAuthOptions from "@/components/UserAuthOptions";
 
 interface HouseProps {
   _id: string;
@@ -22,7 +22,24 @@ async function Home() {
       <div className="max-w-screen-xl w-full p-4 flex items-center justify-between">
         <p className="text-[20px] font-medium">Welcome to house property</p>
         <div className="flex items-center justify-center gap-6">
-          <UserAuthOptions />
+          {session ? (
+            <UserAuthOptions />
+          ) : (
+            <>
+              <Link
+                href={"/authorize/signin"}
+                className="bg-black text-white rounded-[6px] hover:bg-white hover:text-black px-4 py-2 ring-1 ring-black"
+              >
+                Sign In
+              </Link>
+              <Link
+                href={"/authorize/signup"}
+                className="bg-white text-black rounded-[6px] hover:bg-black hover:text-white px-4 py-2 ring-1 ring-black"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
           <Link href={"/housepost"}>
             <button className="bg-black text-white rounded-[6px] hover:bg-white hover:text-black px-4 py-2 ring-1 ring-black">
               upload houses
