@@ -1,14 +1,12 @@
 import Link from "next/link";
-import UserAuthOptions from "@/components/UserAuthOptions";
-
 interface HouseProps {
   _id: string;
   houseName: string;
   housePrice: number;
 }
-
 import { AuthOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
+import UserAuthOptions from "@/components/UserAuthOptions";
 
 async function Home() {
   const fetchdata = await fetch("http://localhost:8080/", {
@@ -25,20 +23,12 @@ async function Home() {
           {session ? (
             <UserAuthOptions />
           ) : (
-            <>
-              <Link
-                href={"/authorize/signin"}
-                className="bg-black text-white rounded-[6px] hover:bg-white hover:text-black px-4 py-2 ring-1 ring-black"
-              >
-                Sign In
-              </Link>
-              <Link
-                href={"/authorize/signup"}
-                className="bg-white text-black rounded-[6px] hover:bg-black hover:text-white px-4 py-2 ring-1 ring-black"
-              >
-                Sign Up
-              </Link>
-            </>
+            <Link
+              href={"/api/auth/signin"}
+              className="bg-black text-white rounded-[6px] hover:bg-white hover:text-black px-4 py-2 ring-1 ring-black"
+            >
+              Sign In
+            </Link>
           )}
           <Link href={"/housepost"}>
             <button className="bg-black text-white rounded-[6px] hover:bg-white hover:text-black px-4 py-2 ring-1 ring-black">
@@ -76,6 +66,7 @@ async function Home() {
                   Update
                 </button>
               </Link>
+
               <Link
                 className="bg-black text-white ring-1 ring-black hover:bg-white hover:text-black px-4 py-2 rounded-full"
                 href={{
