@@ -17,24 +17,4 @@ const HouseSchema = mongoose.Schema({
 
 const House = mongoose.model("house", HouseSchema);
 
-const userSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
-
-export const User = mongoose.model("real users", userSchema);
-
 export default House;
