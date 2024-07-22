@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-
-const HouseSchema = mongoose.Schema({
+const HouseSchema = new mongoose.Schema({
   houseName: {
     type: String,
     required: true,
@@ -15,6 +14,6 @@ const HouseSchema = mongoose.Schema({
   },
 });
 
-const House = mongoose.model("house", HouseSchema);
+const House = new mongoose.model("house", HouseSchema);
 
 export default House;

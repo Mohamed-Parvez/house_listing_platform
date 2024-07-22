@@ -6,7 +6,7 @@ interface HouseProps {
 }
 
 async function Home() {
-  const fetchdata = await fetch("http://localhost:8080/", {
+  const fetchdata = await fetch("http://localhost:8080/api", {
     cache: "no-store",
   });
   const getdata: HouseProps[] = await fetchdata.json();
@@ -14,6 +14,12 @@ async function Home() {
     <main className="flex flex-col items-start justify-start max-w-screen-xl w-full">
       <div className="max-w-screen-xl w-full p-4 flex items-center justify-between">
         <p className="text-[20px] font-medium">Welcome to house property</p>
+        <Link
+          className="bg-black ring-1 ring-black text-white hover:bg-white hover:text-black px-4 py-2 rounded-[10px]"
+          href={"/housepost"}
+        >
+          Post House
+        </Link>
       </div>
 
       <div className="flex flex-col items-start space-y-6 justify-start m-4">
